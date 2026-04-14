@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Nghệ Thông Tin Trong Cuộc Sống</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ==================== CSS VARIABLES & RESET ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Màu sắc chính */
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #06b6d4;
+            --accent-light: #22d3ee;
+            --text-light: #f1f5f9;
+            --text-muted: #cbd5e1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ==================== SCROLLBAR STYLING ==================== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-light);
+        }
+
+        /* ==================== HEADER & NAVIGATION ==================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-light);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--accent-light);
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(6, 182, 212, 0.6);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* ==================== SECTIONS ==================== */
+        section {
+            display: none;
+            min-height: 100vh;
+            padding: 8rem 2rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            max-width: 600px;
+            animation: slideInLeft 0.8s ease-out 0.1s both;
+        }
+
+        /* ==================== HOME SECTION ==================== */
+        #home {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 211, 238, 0.03) 100%);
+            border-radius: 20px;
+            padding: 8rem 4rem;
+        }
+
+        .home-content {
+            flex: 1;
+        }
+
+        .home-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .home-content p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            z-index: 0;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .home-visual {
+            flex: 1;
+            position: relative;
+            height: 400px;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .floating-card:nth-child(1) {
+            top: 20px;
+            left: 20px;
+            width: 200px;
+            animation-delay: 0s;
+        }
+
+        .floating-card:nth-child(2) {
+            top: 150px;
+            right: 20px;
+            width: 180px;
+            animation-delay: 1s;
+        }
+
+        .floating-card:nth-child(3) {
+            bottom: 20px;
+            left: 80px;
+            width: 220px;
+            animation-delay: 2s;
+        }
+
+        .floating-card p {
+            font-size: 0.9rem;
+            margin: 0.5rem 0 0 0;
+            color: var(--text-muted);
+        }
+
+        .floating-card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ==================== CARD LAYOUTS ==================== */
+        .card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-slow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            transform: translateY(-10px);
+            background: rgba(30, 41, 59, 0.9);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* ==================== FEATURES SECTION ==================== */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 211, 238, 0.02) 100%);
+            border-left: 4px solid var(--accent);
+            border-radius: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .feature-item:hover {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(34, 211, 238, 0.05) 100%);
+            transform: translateX(10px);
+        }
+
+        .feature-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.7rem;
+            color: var(--accent-light);
+        }
+
+        /* ==================== QUESTIONS SECTION ==================== */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .question-card:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: var(--accent);
+        }
+
+        .question-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 50%;
+            color: var(--primary);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+            display: none;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+
+        .question-input.active {
+            display: block;
+            animation: slideInLeft 0.3s ease-out;
+        }
+
+        /* ==================== TIMELINE ==================== */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .timeline-item:nth-child(odd) {
+            text-align: right;
+            padding-right: 52%;
+        }
+
+        .timeline-item:nth-child(even) {
+            text-align: left;
+            padding-left: 52%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .timeline-content {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-content {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .timeline-content h4 {
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--secondary);
+            border-top: 1px solid rgba(6, 182, 212, 0.1);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 4rem;
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background: var(--secondary);
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1.5rem;
+                border-left: 1px solid rgba(6, 182, 212, 0.1);
+                min-width: 250px;
+                border-radius: 0 0 0 10px;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .home-content h1 {
+                font-size: 2.8rem;
+            }
+
+            #home {
+                flex-direction: column;
+                padding: 4rem 2rem;
+                text-align: center;
+            }
+
+            .home-visual {
+                height: 300px;
+            }
+
+            .floating-card {
+                width: 150px !important;
+                padding: 1rem !important;
+            }
+
+            .floating-card:nth-child(1) {
+                top: 0 !important;
+                left: 50% !important;
+                transform: translateX(-50%);
+            }
+
+            .floating-card:nth-child(2) {
+                top: auto !important;
+                right: auto !important;
+                left: 10%;
+                bottom: 50px;
+            }
+
+            .floating-card:nth-child(3) {
+                bottom: auto !important;
+                left: auto !important;
+                right: 10%;
+                top: 150px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                text-align: left;
+                padding-right: 0;
+                padding-left: 60px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            section {
+                padding: 6rem 1.5rem 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .home-content h1 {
+                font-size: 2rem;
+            }
+
+            .home-content p {
+                font-size: 1rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 5rem 1rem 2rem;
+            }
+
+            #home {
+                padding: 3rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header>
+        <div class="header-content">
+            <div class="logo">CNTT</div>
+            <nav id="navigation">
+                <a href="#" data-section="home">Trang Chủ</a>
+                <a href="#" data-section="about">Giới Thiệu</a>
+                <a href="#" data-section="applications">Ứng Dụng</a>
+                <a href="#" data-section="benefits">Lợi Ích</a>
+                <a href="#" data-section="challenges">Thách Thức</a>
+                <a href="#" data-section="future">Tương Lai</a>
+                <a href="#" data-section="questions">Thảo Luận</a>
+            </nav>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== HOME SECTION ==================== -->
+    <section id="home" class="active">
+        <div class="home-content">
+            <h1>Công Nghệ Thông Tin Trong Cuộc Sống</h1>
+            <p>Khám phá cách công nghệ thông tin đang thay đổi thế giới của chúng ta, từ giáo dục đến y tế, từ giao tiếp đến giải trí. Hãy cùng nhau tìm hiểu những ứng dụng, lợi ích và thách thức của công nghệ trong thời đại số hóa.</p>
+            <button class="cta-button" id="ctaButton">Khám Phá Ngay</button>
+        </div>
+        <div class="home-visual">
+            <div class="floating-card">
+                <div class="icon">💻</div>
+                <h4>Công Nghệ</h4>
+                <p>Những tiến bộ của tương lai</p>
+            </div>
+            <div class="floating-card">
+                <div class="icon">🌍</div>
+                <h4>Kết Nối</h4>
+                <p>Liên kết thế giới</p>
+            </div>
+            <div class="floating-card">
+                <div class="icon">🚀</div>
+                <h4>Đổi Mới</h4>
+                <p>Tạo ra tương lai</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section id="about">
+        <h2 class="section-title">Giới Thiệu</h2>
+        <p class="section-subtitle">Công Nghệ Thông Tin là gì và tại sao nó quan trọng?</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <h3>Định Nghĩa</h3>
+                <p>Công Nghệ Thông Tin (CNTT) bao gồm tất cả các công cụ, hệ thống và quy trình được sử dụng để thu thập, xử lý, lưu trữ và truyền tải thông tin. Nó là nền tảng của sự phát triển số hóa hiện đại.</p>
+            </div>
+            <div class="card">
+                <h3>Vai Trò Quan Trọng</h3>
+                <p>CNTT đóng vai trò then chốt trong việc tối ưu hóa các quy trình, cải thiện hiệu suất làm việc, tăng cường liên lạc, và tạo ra những giải pháp sáng tạo cho các vấn đề của xã hội.</p>
+            </div>
+            <div class="card">
+                <h3>Tầm Ảnh Hưởng</h3>
+                <p>Từ kinh tế đến y tế, từ giáo dục đến giao tiếp cá nhân, CNTT đã trở thành một phần không thể tách rời của cuộc sống hàng ngày của mỗi người.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== APPLICATIONS SECTION ==================== -->
+    <section id="applications">
+        <h2 class="section-title">Ứng Dụng Trong Đời Sống</h2>
+        <p class="section-subtitle">Những lĩnh vực mà CNTT đang tạo ra sự thay đổi</p>
+        
+        <div class="features-list">
+            <div class="feature-item">
+                <span class="icon">🎓</span>
+                <h4>Giáo Dục</h4>
+                <p>Các nền tảng học trực tuyến, công cụ học tập được cá nhân hóa, và các phòng học ảo đang cách mạng hóa cách học tập của học sinh trên toàn thế giới.</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">⚕️</span>
+                <h4>Y Tế</h4>
+                <p>Công nghệ viễn thám, trí tuệ nhân tạo trong chẩn đoán, và hệ thống quản lý bệnh nhân điện tử giúp cải thiện chất lượng chăm sóc sức khỏe.</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">💬</span>
+                <h4>Giao Tiếp</h4>
+                <p>Mạng xã hội, cuộc gọi video, và ứng dụng nhắn tin cho phép con người kết nối với nhau mọi lúc, mọi nơi, bất kể khoảng cách.</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🎮</span>
+                <h4>Giải Trí</h4>
+                <p>Streaming video, trò chơi điện tử, thực tế ảo, và các nội dung kỹ thuật số cung cấp giải trí vô tận cho người dùng.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BENEFITS SECTION ==================== -->
+    <section id="benefits">
+        <h2 class="section-title">Lợi Ích Nổi Bật</h2>
+        <p class="section-subtitle">Những ưu điểm của công nghệ thông tin</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <h3>⚡ Hiệu Suất Cao</h3>
+                <p>CNTT cho phép tự động hóa các quy trình, giảm chi phí và tăng năng suất lao động đáng kể trong các tổ chức.</p>
+            </div>
+            <div class="card">
+                <h3>🌐 Kết Nối Toàn Cầu</h3>
+                <p>Công nghệ giúp con người kết nối với những cá nhân từ khắp nơi trên thế giới, phá vỡ các rào cản địa lý và văn hóa.</p>
+            </div>
+            <div class="card">
+                <h3>📊 Dễ Tiếp Cận Thông Tin</h3>
+                <p>Internet và các công cụ tìm kiếm cho phép mọi người dễ dàng truy cập thông tin, kiến thức cần thiết cho học tập và phát triển.</p>
+            </div>
+            <div class="card">
+                <h3>💡 Tạo Ra Cơ Hội Mới</h3>
+                <p>CNTT mở ra những cơ hội kinh doanh mới, tạo công ăn việc làm và hỗ trợ sự khởi nghiệp trong kỷ nguyên số.</p>
+            </div>
+            <div class="card">
+                <h3>🔒 Bảo Vệ Thông Tin</h3>
+                <p>Các công cụ mã hóa và bảo mật tiên tiến giúp bảo vệ dữ liệu cá nhân và thông tin nhạy cảm của người dùng.</p>
+            </div>
+            <div class="card">
+                <h3>🎯 Tùy Chỉnh Cá Nhân</h3>
+                <p>CNTT cho phép các dịch vụ được cá nhân hóa theo nhu cầu và sở thích của từng người dùng riêng lẻ.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CHALLENGES SECTION ==================== -->
+    <section id="challenges">
+        <h2 class="section-title">Thách Thức</h2>
+        <p class="section-subtitle">Những vấn đề cần được giải quyết</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <h3>🔐 Bảo Mật Mạng</h3>
+                <p>Tấn công mạng, đánh cắp dữ liệu và các mối đe dọa an ninh mạng ngày càng tinh vi, yêu cầu các giải pháp bảo vệ liên tục.</p>
+            </div>
+            <div class="card">
+                <h3>📱 Nghiện Công Nghệ</h3>
+                <p>Sử dụng quá mức các thiết bị và ứng dụng công nghệ có thể ảnh hưởng xấu đến sức khỏe thể chất, tinh thần và các mối quan hệ xã hội.</p>
+            </div>
+            <div class="card">
+                <h3>❌ Thông Tin Sai Lệch</h3>
+                <p>Sự lan truyền của thông tin giả và tin tức sai lệch trên mạng xã hội tạo ra những hậu quả nghiêm trọng cho xã hội.</p>
+            </div>
+            <div class="card">
+                <h3>💼 Mất Việc Làm</h3>
+                <p>Tự động hóa và AI có thể thay thế một số công việc truyền thống, gây ra lo ngại về việc làm trong tương lai.</p>
+            </div>
+            <div class="card">
+                <h3>🤖 Đạo Đức AI</h3>
+                <p>Các vấn đề về quyền riêng tư, thiên lệch thuật toán và đạo đức sử dụng trí tuệ nhân tạo là những thách thức lớn.</p>
+            </div>
+            <div class="card">
+                <h3>🌍 Chia Cách Số</h3>
+                <p>Không phải tất cả mọi người đều có quyền truy cập bình đẳng vào công nghệ và internet, tạo ra sự bất bình đẳng kỹ thuật số.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FUTURE SECTION ==================== -->
+    <section id="future">
+        <h2 class="section-title">Tương Lai</h2>
+        <p class="section-subtitle">Xu hướng phát triển của công nghệ thông tin</p>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>🤖 Trí Tuệ Nhân Tạo và Machine Learning</h4>
+                    <p>AI sẽ tiếp tục phát triển và tích hợp vào mọi khía cạnh của cuộc sống, từ chăm sóc sức khỏe đến giao thông vận tải.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>🌐 Internet Vạn Vật (IoT)</h4>
+                    <p>Miliardi thiết bị sẽ được kết nối với internet, tạo ra một hệ thống "thông minh" toàn cầu.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>⚙️ Điện Toán Lượng Tử</h4>
+                    <p>Công nghệ lượng tử hứa hẹn sẽ cách mạng hóa khả năng tính toán và giải quyết những vấn đề phức tạp.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>🥽 Thực Tế Tăng Cường và Metaverse</h4>
+                    <p>Các công nghệ VR/AR sẽ tạo ra những trải nghiệm kỹ thuật số沉浸式 hoàn toàn mới.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== QUESTIONS SECTION ==================== -->
+    <section id="questions">
+        <h2 class="section-title">Câu Hỏi Thảo Luận</h2>
+        <p class="section-subtitle">Hãy suy tư và chia sẻ quan điểm của bạn</p>
+        
+        <div class="questions-container">
+            <div class="question-card">
+                <span class="question-number">1</span>
+                <div class="question-text">Công nghệ thông tin có thực sự cải thiện chất lượng cuộc sống của chúng ta không? Tại sao?</div>
+                <input type="text" class="question-input" placeholder="Nhập câu trả lời của bạn...">
+            </div>
+            <div class="question-card">
+                <span class="question-number">2</span>
+                <div class="question-text">Theo bạn, lợi ích của CNTT có lớn hơn những thách thức mà nó mang lại không?</div>
+                <input type="text" class="question-input" placeholder="Nhập câu trả lời của bạn...">
+            </div>
+            <div class="question-card">
+                <span class="question-number">3</span>
+                <div class="question-text">Làm thế nào chúng ta có thể bảo vệ bản thân khỏi các mối đe dọa bảo mật trực tuyến?</div>
+                <input type="text" class="question-input" placeholder="Nhập câu trả lời của bạn...">
+            </div>
+            <div class="question-card">
+                <span class="question-number">4</span>
+                <div class="question-text">Vai trò của công nghệ trong giáo dục tương lai sẽ như thế nào?</div>
+                <input type="text" class="question-input" placeholder="Nhập câu trả lời của bạn...">
+            </div>
+            <div class="question-card">
+                <span class="question-number">5</span>
+                <div class="question-text">Bạn lo ngại gì nhất về sự phát triển của trí tuệ nhân tạo?</div>
+                <input type="text" class="question-input" placeholder="Nhập câu trả lời của bạn...">
+            </div>
+            <div class="question-card">
+                <span class="question-number">6</span>
+                <div class="question-text">Làm cách nào để giảm thiểu tác động tiêu cực của công nghệ trên sức khỏe tinh thần?</div>
+                <input type="text" class="question-input" placeholder="Nhập câu trả lời của bạn...">
+            </div>
+            <div class="question-card">
+                <span class="question-number">7</span>
+                <div class="question-text">Ai nên chịu trách nhiệm về việc đảm bảo tiếp cận công nghệ công bằng cho tất cả mọi người?</div>
+                <input type="text" class="question-input" placeholder="Nhập câu trả lời của bạn...">
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <p>&copy; 2024 Công Nghệ Thông Tin Trong Cuộc Sống. Được thiết kế với ❤️ cho tương lai số hóa.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">Hãy suy tư về công nghệ. Hãy khôn ngoan trong sử dụng. Hãy tạo ra tương lai tốt đẹp.</p>
+    </footer>
+
+    <script>
+        // ==================== NAVIGATION HANDLING ==================== 
+        const navLinks = document.querySelectorAll('nav a');
+        const sections = document.querySelectorAll('section');
+        const menuToggle = document.getElementById('menuToggle');
+        const navigation = document.getElementById('navigation');
+
+        // Handle navigation clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('data-section');
+                showSection(sectionId);
+                
+                // Close mobile menu
+                navigation.classList.remove('active');
+                
+                // Update active link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Smooth scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Mobile menu toggle
+        menuToggle.addEventListener('click', () => {
+            navigation.classList.toggle('active');
+        });
+
+        // Show section function
+        function showSection(sectionId) {
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // ==================== CTA BUTTON ==================== 
+        const ctaButton = document.getElementById('ctaButton');
+        ctaButton.addEventListener('click', () => {
+            showSection('applications');
+            navLinks.forEach(l => l.classList.remove('active'));
+            navLinks[2].classList.add('active'); // Ứng Dụng link
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            playClickSound();
+        });
+
+        // ==================== QUESTION CARDS INTERACTIVITY ==================== 
+        const questionCards = document.querySelectorAll('.question-card');
+        
+        questionCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'INPUT') {
+                    const input = card.querySelector('.question-input');
+                    const isActive = input.classList.contains('active');
+                    
+                    // Close other inputs
+                    document.querySelectorAll('.question-input.active').forEach(inp => {
+                        if (inp !== input) inp.classList.remove('active');
+                    });
+                    
+                    // Toggle current input
+                    if (!isActive) {
+                        input.classList.add('active');
+                        input.focus();
+                        playClickSound();
+                    } else {
+                        input.classList.remove('active');
+                    }
+                }
+            });
+
+            // Handle input submission
+            const input = card.querySelector('.question-input');
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && input.value.trim()) {
+                    showNotification('Cảm ơn câu trả lời của bạn! 🎉');
+                    input.value = '';
+                    input.classList.remove('active');
+                    playSuccessSound();
+                }
+            });
+        });
+
+        // ==================== SOUND EFFECTS ==================== 
+        function playClickSound() {
+            // Create a simple beep sound using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        function playSuccessSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = [800, 1000, 1200];
+            
+            notes.forEach((freq, index) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = freq;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime + index * 0.05);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + index * 0.05 + 0.1);
+                
+                oscillator.start(audioContext.currentTime + index * 0.05);
+                oscillator.stop(audioContext.currentTime + index * 0.05 + 0.1);
+            });
+        }
+
+        // ==================== NOTIFICATION ==================== 
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, var(--accent), var(--accent-light));
+                color: var(--primary);
+                padding: 1rem 1.5rem;
+                border-radius: 50px;
+                font-weight: 600;
+                box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+                animation: slideInRight 0.3s ease-out;
+                z-index: 10000;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideInLeft 0.3s ease-out reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ==================== SCROLL ANIMATIONS ==================== 
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .feature-item, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // ==================== ACTIVE NAVIGATION UPDATE ==================== 
+        window.addEventListener('load', () => {
+            navLinks[0].classList.add('active');
+        });
+
+        // ==================== SMOOTH SCROLL ==================== 
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // ==================== KEYBOARD NAVIGATION ==================== 
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                navigation.classList.remove('active');
+                document.querySelectorAll('.question-input.active').forEach(inp => {
+                    inp.classList.remove('active');
+                });
+            }
+        });
+
+        // ==================== PARALLAX EFFECT ON HOME ==================== 
+        window.addEventListener('scroll', () => {
+            const homeSection = document.getElementById('home');
+            if (homeSection.classList.contains('active')) {
+                const scrollPosition = window.scrollY;
+                const cards = homeSection.querySelectorAll('.floating-card');
+                cards.forEach((card, index) => {
+                    card.style.transform = `translateY(${scrollPosition * 0.1 * (index + 1)}px)`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
